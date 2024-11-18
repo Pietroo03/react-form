@@ -4,25 +4,39 @@ const articlesList = []
 export default function AppMain() {
 
     const [articles, setArticle] = useState(articlesList)
-    const [newArticle, setNewArticle] = useState('')
+    const [newTitle, setNewTitle] = useState('')
     const [newAuthor, setNewAuthor] = useState('')
     const [newYear, setNewYear] = useState('')
+    const [editArticle, setEditArticle] = useState(null)
 
     function addArticle(e) {
         e.preventDefault(e)
 
         const newArticleData = {
-            title: newArticle,
+            title: newTitle,
             author: newAuthor,
             year: newYear
         }
 
-        setArticle([
-            ...articles,
-            newArticleData
-        ])
+        // if statement per le condizioni dell'edit
 
-        setNewArticle('')
+        //se editArticle è settato su null, vuolo dire che non sto modificando qualcosa, ma lo sto aggiungendo
+        if (editArticle != null) {
+            const updatedArticles = [...articles]
+            console.log(updatedArticles);
+            updatedArticles[editArticle] = newArticleData
+            setArticle(updatedArticles)
+            setEditArticle(null)
+        } else {
+
+            setArticle([
+                ...articles,
+                newArticleData
+            ])
+
+        }
+
+        setNewTitle('')
         setNewAuthor('')
         setNewYear('')
     }
@@ -34,6 +48,23 @@ export default function AppMain() {
         const articlesListUpdate = articles.filter((article, index) => index != removeArticle)
 
         setArticle(articlesListUpdate)
+
+    }
+
+    function handleEdit(e) {
+
+        // recupero il data-index dell'articolo che voglio modificare
+        const articleIndex = Number(e.target.getAttribute('data-index'))
+        console.log(articleIndex);
+
+        // articleIndex corrisponderà alla posizione dell'oggetto, nell'array articles, che voglio modificare
+        const articleToEdit = articles[articleIndex]
+        console.log(articleToEdit);
+
+        setNewTitle(articleToEdit.title)
+        setNewAuthor(articleToEdit.author)
+        setNewYear(articleToEdit.year)
+        setEditArticle(articleIndex)
 
     }
 
@@ -54,8 +85,8 @@ export default function AppMain() {
                                 placeholder="Aggiungi Titolo"
                                 aria-label="Recipient's username"
                                 aria-describedby="button-addon2"
-                                value={newArticle}
-                                onChange={e => setNewArticle(e.target.value)} />
+                                value={newTitle}
+                                onChange={e => setNewTitle(e.target.value)} />
 
                             <button className="btn btn-primary" type="submit" id="button-addon2">Aggiungi Titolo</button>
                         </div>
@@ -106,10 +137,12 @@ export default function AppMain() {
                                 <div>Titolo: <strong>{article.title}</strong></div>
                                 <div>Autore: <strong>{article.author}</strong></div>
                                 <div>Anno di Pubblicazione: <strong>{article.year}</strong></div>
-
                             </div>
 
-                            <button onClick={handleRemove} data-index={index} className="btn btn-danger">Remove</button>
+                            <div>
+                                <button onClick={handleEdit} data-index={index} className="btn btn-success me-2">Modifica</button>
+                                <button onClick={handleRemove} data-index={index} className="btn btn-danger">Rimuovi</button>
+                            </div>
                         </li>
 
                     )}
