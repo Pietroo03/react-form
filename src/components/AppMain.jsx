@@ -36,7 +36,7 @@ export default function AppMain() {
 
                 <form onSubmit={addArticle}>
                     <div className="mb-3">
-                        <label htmlFor="title" className="form-label">Title</label>
+                        <label htmlFor="title" className="form-label">Titolo</label>
 
                         <div className="input-group mb-3">
                             <input type="text"
