@@ -6,13 +6,15 @@ export default function AppMain() {
     const [articles, setArticle] = useState(articlesList)
     const [newArticle, setNewArticle] = useState('')
     const [newAuthor, setNewAuthor] = useState('')
+    const [newYear, setNewYear] = useState('')
 
     function addArticle(e) {
         e.preventDefault(e)
 
         const newArticleData = {
             title: newArticle,
-            author: newAuthor
+            author: newAuthor,
+            year: newYear
         }
 
         setArticle([
@@ -22,6 +24,7 @@ export default function AppMain() {
 
         setNewArticle('')
         setNewAuthor('')
+        setNewYear('')
     }
 
     function handleRemove(e) {
@@ -76,6 +79,23 @@ export default function AppMain() {
 
                     </div>
 
+                    <div className="mb-3">
+                        <label htmlFor="author" className="form-label">Anno di Pubblicazione</label>
+
+                        <div className="input-group mb-3">
+                            <input type="text"
+                                className="form-control"
+                                placeholder="Aggiungi Anno di Pubblicazione"
+                                aria-label="Recipient's username"
+                                aria-describedby="button-addon2"
+                                value={newYear}
+                                onChange={e => setNewYear(e.target.value)} />
+
+                            <button className="btn btn-primary" type="submit" id="button-addon2">Aggiungi Anno</button>
+                        </div>
+
+                    </div>
+
                 </form>
 
                 <h2>Articles List</h2>
@@ -85,6 +105,8 @@ export default function AppMain() {
                             <div>
                                 <div>Titolo: <strong>{article.title}</strong></div>
                                 <div>Autore: <strong>{article.author}</strong></div>
+                                <div>Anno di Pubblicazione: <strong>{article.year}</strong></div>
+
                             </div>
 
                             <button onClick={handleRemove} data-index={index} className="btn btn-danger">Remove</button>
