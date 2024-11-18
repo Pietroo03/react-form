@@ -13,8 +13,17 @@ export default function AppMain() {
             ...articles,
             newArticle
         ])
-        console.log(articles);
 
+        setNewArticle('')
+    }
+
+    function handleRemove(e) {
+        const removeArticle = Number(e.target.getAttribute('data-index'))
+        console.log(removeArticle);
+
+        const articlesListUpdate = articles.filter((article, index) => index != removeArticle)
+
+        setArticle(articlesListUpdate)
 
     }
 
@@ -48,8 +57,10 @@ export default function AppMain() {
                 <h2>Articles List</h2>
                 <ul className="list-group">
                     {articles.map((article, index) =>
-                        <li key={index} className="list-group-item">
+                        <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                             {article}
+
+                            <button onClick={handleRemove} data-index={index} className="btn btn-danger">Remove</button>
                         </li>
 
                     )}
