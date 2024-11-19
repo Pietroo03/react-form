@@ -27,6 +27,7 @@ export default function AppMain() {
             updatedArticles[editArticle] = newArticleData
             setArticle(updatedArticles)
             setEditArticle(null)
+
         } else {
 
             setArticle([
